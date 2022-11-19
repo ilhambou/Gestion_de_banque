@@ -3,11 +3,13 @@ public class Banque {
     private int idBanque;
     private String nom;
     private String email;
-    private final int maxCompte=10;
-    private final int maxClient=10;
-    private Client[] client = new Client[10];
-    private Compte[] compte = new Compte[10];
+    private final int maxCompte=2;
+    private final int maxClient=2;
+    private Client[] client = new Client[3];
+    private Compte[] compte = new Compte[3];
     public static int count;
+    public int nbrcl=0;
+    public int nbrcp=0;
 
     //constructeurs
 

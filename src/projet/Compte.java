@@ -18,6 +18,15 @@ public class Compte {
     Compte()
     {
     }
+    Compte(double solde)
+    {
+        this.idCompte = count++;
+        this.solde=solde;
+        this.date= LocalDateTime.now();
+        journalisation[i]="compte : "+idCompte+"la date de creation :"+date;
+        i++;
+
+    }
     Compte(double solde, Client client)
     {
         this.solde=solde;

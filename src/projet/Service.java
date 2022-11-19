@@ -1,9 +1,11 @@
 package projet;
 
+import java.awt.*;
 import java.util.Scanner;
 
 
 public class Service {
+    public static Banque banque=new Banque("banqueone","banque");
 
     public boolean verser(double montant, Compte c)
     {
@@ -19,67 +21,66 @@ public class Service {
         return true;
     }
 
-
-    public static Client addClient(Scanner clavier)
+    public static boolean créerEtAjouterCompte(Scanner clavier)
     {
-        clavier = new Scanner(System.in);
+        System.out.print("entrer le solde : ");
+        double solde=clavier.nextDouble();
+        Compte compte = new Compte(solde);
 
-            System.out.println("entrer le nom :");
-            String nom=clavier.next();
-
-            System.out.println("entrer le prenom :");
-            String prenom=clavier.next();
-
-            System.out.println("entrer email :");
-            String email=clavier.next();
-            Client client=new Client(nom,prenom,email);
-
-        return client;
-    }
-
-    public static void afficher()
-    {
-        Client client[]= new Client[10];
-
-
-        for (int i = 0; i < client.length; i++) {
-
-            System.out.print(client[i]);
-
-        }
-    }
-
-
-
-  /**  public boolean supprimerCompte(Scanner clavier)
-    {
-        Compte comptes[];
-        Compte c = null;
-        System.out.println("entrer le num de compte");
-        int n = clavier.nextInt();
-        for(int i=0;i<=comptes.lentgh;i++)
-        {
-            if(c.getIdCompte()==n)
+        if(banque.nbrcp<banque.getMaxCompte())
             {
-                comptes[i]=comptes[i+1];
+                banque.getCompte()[banque.nbrcp]=compte;
+                banque.nbrcp++;
+                return true;
             }
-            i--;
-        }
-        return true;
+        else
+            {
+                System.out.print("vous pouvez pas ajouter un compte");
+                return false;
+            }
+
 
     }
-**/
+
+    public static boolean créerEtAjouterNouveauClient(Scanner clavier)
+    {
+        System.out.print("entrer le nom : ");
+        String nom=clavier.next();
+        System.out.print("entrer le prenom : ");
+        String prenom=clavier.next();
+        System.out.print("entrer l'email : ");
+        String email=clavier.next();
+
+
+        Client client = new Client(nom,prenom,email);
+
+        if(banque.nbrcl<banque.getMaxClient())
+        {
+            banque.getClient()[banque.nbrcl]=client;
+            banque.nbrcl++;
+            return true;
+        }
+        else
+        {
+            System.out.print("vous pouvez pas ajouter un client");
+            return false;
+        }
+
+
+    }
+
+
 
 
     public static void main(String[] args){
         int choice=-1;
-        Scanner clavier = new Scanner(System.in);
+        Scanner clavier=new Scanner(System.in);
 
 
 
         do {
-            System.out.println("1.ajouter des clients");
-            System.out.println("2.consulter les clients");
+            System.out.println("1.ajouter un compte : ");
+            System.out.println("2.ajouter un client : ");
             System.out.println("3.chercher un client ");
             System.out.println("4.supprimer un client ");
             System.out.println("0.exit");
@@ -87,18 +88,13 @@ public class Service {
             choice=clavier.nextInt();
             switch (choice){
                 case 1:
-
-                   Client c=addClient(clavier);
-                   System.out.println(c);
-
-
-
-
+                    créerEtAjouterCompte(clavier);
 
 
                     break;
                 case 2:
-                    afficher();
+                    créerEtAjouterNouveauClient(clavier);
+
 
 
                     break;
