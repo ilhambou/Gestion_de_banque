@@ -15,6 +15,7 @@ public class Client {
     public Client(){}
     public Client(String nom,String prenom, String email)
     {
+        this.idClient = count++;
         this.nom=nom;
         this.prenom=prenom;
         this.email=email;
@@ -25,7 +26,7 @@ public class Client {
     //getters
 
     public int getIdClient() {
-        this.idClient = count++;
+        //this.idClient = count++;
         return idClient;
 
     }

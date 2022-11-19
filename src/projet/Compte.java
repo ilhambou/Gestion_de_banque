@@ -29,6 +29,7 @@ public class Compte {
     }
     Compte(double solde, Client client)
     {
+        this.idCompte = count++;
         this.solde=solde;
         this.date= LocalDateTime.now();
         this.client=client;
@@ -39,7 +40,7 @@ public class Compte {
     //getters
     public int getIdCompte() {
 
-        this.idCompte = count++;
+        //this.idCompte = count++;
         return idCompte;
 
     }
@@ -128,4 +129,6 @@ public class Compte {
             return true;
         else return false;
     }
+
+
 }
