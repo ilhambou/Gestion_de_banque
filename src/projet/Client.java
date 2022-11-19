@@ -6,14 +6,13 @@ public class Client {
     private String nom ;
     private String prenom;
     private String email;
-    private Compte[] ClientComptes = new Compte[2];
+    private Compte[] compte = new Compte[2];
 
     public static int count;
 
     // Constructeurs
 
-    public Client(){
-    }
+    public Client(){}
     public Client(String nom,String prenom, String email)
     {
         this.nom=nom;
@@ -40,6 +39,9 @@ public class Client {
         return email;
     }
 
+    public Compte[] getCompte() {
+        return compte;
+    }
     //setters
 
     public void setIdClient(int idClient) {
@@ -58,28 +60,29 @@ public class Client {
         this.email = email;
     }
 
+    public void setCompte(Compte[] compte) {
+        this.compte = compte;
+    }
+
     //ToString
 
     @Override
     public String toString() {
-        return "id="+idClient +"nom="+nom;
+        return "id="+idClient +"nom="+nom+"prenom: "+prenom+"email: "+email;
 
     }
 
     //Equal
 
-    /**
     @Override
     public boolean equals(Object other) {
-        if(other instanceof Compte) {
-            return this.getIdClient().equals(((Compte)other).getIdClient());
-        }
-        else
-        {
-            return false;
-        }
+        if(other instanceof Client)
+            return  false;
+        Client o= (Client) other;
+        if (this.getIdClient()==o.getIdClient() && this.nom==o.getNom() && this.prenom==o.getPrenom() && this.email==o.getEmail() )
+            return true;
+        else return false;
     }
-**/
 
 
 

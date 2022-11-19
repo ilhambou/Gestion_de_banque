@@ -1,26 +1,30 @@
 package projet;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Compte {
     private int idCompte;
     private double solde;
-    private String[] compte=new String[10];
+    private String[] journalisation=new String[10];
     private Client client ;
     private LocalDateTime date;
     public static int count;
+    public int i;
 
     //Constructeurs
 
     Compte()
     {
     }
-    Compte(double solde, LocalDateTime date, Client client)
+    Compte(double solde, Client client)
     {
         this.solde=solde;
-        this.date=date;
+        this.date= LocalDateTime.now();
         this.client=client;
+        journalisation[i]="compte : "+idCompte+"la date de creation :"+date;
+        i++;
     }
 
     //getters
@@ -34,8 +38,8 @@ public class Compte {
         return solde;
     }
 
-    public String[] getCompte() {
-        return compte;
+    public String[] getJournalisation() {
+        return journalisation;
     }
 
     public Client getClient() {
@@ -55,19 +59,23 @@ public class Compte {
     public void setSolde(double solde) {
         if (solde>0.0)
         {
+            journalisation[i]="compte : "+idCompte+"update solde : "+ solde;
+            i++;
             this.solde = solde;
         }
 
     }
 
-    public void setCompte(String[] compte) {
-        this.compte = compte;
+    public void setJournalisation(String[] journalisation) {
+        this.journalisation = journalisation;
     }
-
     public void setDate() {
         this.date= LocalDateTime.now();
     }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     /**public boolean setlogs(String log){
 
@@ -95,22 +103,20 @@ public class Compte {
 
     @Override
     public String toString() {
-        return "id="+idCompte +"solde="+solde;
+        return "id="+idCompte +"solde="+solde+"date de creation : "+date;
 
     }
 
     //equals
 
-/**
+
     @Override
     public boolean equals(Object other) {
-        if(other instanceof Compte) {
-            return this.getIdCompte().equals(((Compte) other).getIdCompte());
-
-        }
-        else
-        {
-            return false;}
-
-    **/
+        if(other instanceof Compte)
+            return  false;
+        Compte o= (Compte) other;
+        if (this.getIdCompte()==o.getIdCompte())
+            return true;
+        else return false;
+    }
 }
