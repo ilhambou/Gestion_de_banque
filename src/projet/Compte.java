@@ -71,9 +71,8 @@ public class Compte {
     public void setSolde(double solde) {
         if (solde>0.0)
         {
-            journalisation[i]="compte : "+idCompte+"update solde : "+ solde;
-            i++;
             this.solde = solde;
+
         }
 
     }

@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 
 public class Service {
+
     public static Banque banque=new Banque("banqueone","banque");
 
     /**--------------------------------------------------------------------------------------------------**/
@@ -14,6 +15,7 @@ public class Service {
         for(int i=0;i<banque.nbrcp;i++)
         {
             banque.getCompte()[i].setSolde(c.getSolde()+montant);
+
         }
 
         return true;
@@ -23,8 +25,20 @@ public class Service {
         for(int i=0;i<banque.nbrcp;i++)
         {
             banque.getCompte()[i].setSolde(c.getSolde()-montant);
+
+        }
+
+        return true;
+    }
+    public static boolean virement(double montant, Compte src, Compte des){
+        for(int i=0;i<banque.nbrcp;i++)
+        {
+            banque.getCompte()[i].setSolde(des.getSolde()+montant);
+            banque.getCompte()[i].setSolde(src.getSolde()-montant);
+
         }
         return true;
+
     }
 
 
@@ -90,6 +104,21 @@ public class Service {
 
     public boolean lierCompteAuClient (int idClient, int idCompte)
     {
+        int x = 0;
+        for(int i=0;i<banque.nbrcp;i++)
+        {
+            if(banque.getCompte()[i].getIdCompte()==idCompte)
+            {
+                x=i;
+            }
+        }
+        for(int i=0;i<banque.nbrcl;i++)
+        {
+            if(banque.getClient()[i].getIdClient()==idClient)
+            {
+                x=i;
+            }
+        }
         return true;
     }
 
@@ -316,7 +345,24 @@ public class Service {
     }
 
 
+/**---------------------------------------------------- afficher tt --------------------------------------------**/
 
+
+    public static void afficherCompte()
+    {
+        for(int i=0;i<banque.nbrcp;i++)
+        {
+            System.out.println(banque.getCompte()[i].toString());
+        }
+    }
+
+    public static void afficherClient()
+    {
+        for(int i=0;i<banque.nbrcl;i++)
+        {
+            System.out.println(banque.getClient()[i].toString());
+        }
+    }
 
     public static void main(String[] args){
         int choice=-1;
@@ -337,7 +383,12 @@ public class Service {
             System.out.println("--------------------------------------------------------- ");
             System.out.println("                 11. verser ");
             System.out.println("                 12. retirer  ");
-            System.out.println("                 12. virement  ");
+            System.out.println("                 13. virement  ");
+            System.out.println("--------------------------------------------------------- ");
+
+            System.out.println("                 14. consulter tt les comptes  ");
+            System.out.println("                 15. consulter tt les clients  ");
+
             System.out.println("--------------------------------------------------------- ");
 
             System.out.println("                 0. exit");
@@ -386,14 +437,14 @@ public class Service {
                     break;
                 case 5:
 
-                        consulterDétailCompte(clavier);
+                    consulterDétailCompte(clavier);
 
 
 
                     break;
                 case 6:
 
-                        consulterDétailClient(clavier);
+                    consulterDétailClient(clavier);
 
                     break;
                 case 7:
@@ -430,6 +481,27 @@ public class Service {
 
 
                     break;
+                case 13:
+
+                    System.out.print("(src) ");
+                    Compte src=chercherlCompte(clavier);
+                    System.out.print("(des) ");
+                    Compte des=chercherlCompte(clavier);
+                    System.out.print("enter le montant : ");
+                    double montant_ver = clavier.nextDouble();
+                    virement(montant_ver, src, des);
+
+
+                    break;
+                case 14:
+                {
+                    afficherCompte();
+                    break;
+                }
+                case 15:
+                {
+                    afficherClient();
+                }
             }
         }while (choice!=0);
     }
