@@ -1,4 +1,7 @@
 package projet;
+
+import java.util.regex.Pattern;
+
 public class Banque {
     private int idBanque;
     private String nom;
@@ -92,6 +95,8 @@ public class Banque {
             return true;
         else return false;
     }
+
+
 
 
 }

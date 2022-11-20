@@ -1,6 +1,8 @@
 package projet;
 
 
+import java.util.regex.Pattern;
+
 public class Client {
     private int idClient;
     private String nom ;
@@ -8,7 +10,7 @@ public class Client {
     private String email;
     private Compte[] compte = new Compte[2];
 
-    public static int count;
+    public static int count=1;
 
     // Constructeurs
 
@@ -57,7 +59,16 @@ public class Client {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        boolean resultat=isValid(email);
+        if(resultat==true)
+        {
+            this.email = email;
+        }
+        else
+        {
+            System.out.println("invalid email");
+        }
+
     }
 
     public void setCompte(Compte[] compte) {
@@ -68,7 +79,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "id="+idClient +"nom="+nom+"prenom: "+prenom+"email: "+email;
+        return "id: "+idClient +" nom: "+nom+" prenom: "+prenom+" email: "+email;
 
     }
 
@@ -82,6 +93,15 @@ public class Client {
         if (this.getIdClient()==o.getIdClient())
             return true;
         else return false;
+    }
+
+    public static boolean isValid(String email)
+    {
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        if (email == null)
+            return false;
+        return pattern.matcher(email).matches();
     }
 
 

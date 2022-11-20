@@ -2,6 +2,7 @@ package projet;
 
 import java.awt.*;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 
 public class Service {
@@ -9,19 +10,24 @@ public class Service {
 
     /**--------------------------------------------------------------------------------------------------**/
 
-    public boolean verser(double montant, Compte c)
-    {
-        double solde = c.getSolde();
-        solde=solde+montant;
+    public static boolean verser(double montant, Compte c){
+        for(int i=0;i<banque.nbrcp;i++)
+        {
+            banque.getCompte()[i].setSolde(c.getSolde()+montant);
+        }
+
         return true;
 
     }
-    public boolean retirer(double montant, Compte c)
-    {
-        double solde = c.getSolde();
-        solde=solde-montant;
+    public static boolean retirer(double montant, Compte c){
+        for(int i=0;i<banque.nbrcp;i++)
+        {
+            banque.getCompte()[i].setSolde(c.getSolde()-montant);
+        }
         return true;
     }
+
+
 
     /** -------------------------------------------------ajout-----------------------------------------------**/
 
@@ -34,11 +40,12 @@ public class Service {
         {
             banque.getCompte()[banque.nbrcp]=compte;
             banque.nbrcp++;
+            System.out.println("ajout avec succes");
             return true;
         }
         else
         {
-            System.out.print("vous pouvez pas ajouter un compte");
+            System.out.println("vous pouvez pas ajouter un compte");
             return false;
         }
     }
@@ -49,21 +56,33 @@ public class Service {
         String prenom=clavier.next();
         System.out.print("entrer l'email : ");
         String email=clavier.next();
-
-
-        Client client = new Client(nom,prenom,email);
-
-        if(banque.nbrcl<banque.getMaxClient())
+        String regex = "^(.+)@(.+)$";
+        Pattern pattern = Pattern.compile(regex);
+        if(pattern.matcher(email).matches()==false)
         {
-            banque.getClient()[banque.nbrcl]=client;
-            banque.nbrcl++;
-            return true;
+            System.out.println("invalid email");
+            return false;
         }
         else
         {
-            System.out.print("vous pouvez pas ajouter un client");
-            return false;
+            Client client = new Client(nom,prenom,email);
+
+            if(banque.nbrcl<banque.getMaxClient())
+            {
+                banque.getClient()[banque.nbrcl]=client;
+                banque.nbrcl++;
+                System.out.println("ajout avec succes");
+                return true;
+            }
+            else
+            {
+                System.out.println("vous pouvez pas ajouter un client");
+                return false;
+            }
+
         }
+
+
 
     }
 
@@ -79,13 +98,14 @@ public class Service {
         Compte compte = new Compte();
         System.out.print("entrer id : ");
         int id=clavier.nextInt();
+        compte=null;
         for (int i=0;i<banque.nbrcp;i++)
         {
             if(banque.getCompte()[i].getIdCompte()==id)
             {
-                System.out.println("found");
                 compte=banque.getCompte()[i];
             }
+
         }
 
         return compte;
@@ -96,13 +116,14 @@ public class Service {
         Client client = new Client();
         System.out.print("entrer id : ");
         int id=clavier.nextInt();
+        client=null;
         for (int i=0;i<banque.nbrcl;i++)
         {
             if(banque.getClient()[i].getIdClient()==id)
             {
-                System.out.println("found");
                 client=banque.getClient()[i];
             }
+
         }
 
         return client;
@@ -143,32 +164,44 @@ public class Service {
     /**------------------------------------------------affichage-----------------------------------------------**/
     public static void consulterDétailCompte(Scanner clavier){
         Compte compte=new Compte();
-        System.out.println("entrer l'id : ");
+        System.out.print("entrer l'id : ");
         int id = clavier.nextInt();
+        int x=0;
         for (int i=0;i<banque.nbrcp;i++)
         {
             if(banque.getCompte()[i].getIdCompte()==id)
             {
                 compte=banque.getCompte()[i];
                 System.out.println(compte);
+                x=1;
             }
-
+        }
+        if(x==0)
+        {
+            System.out.println("compte n'existe pas");
         }
 
     }
 
     public static void consulterDétailClient(Scanner clavier){
         Client client=new Client();
-        System.out.println("entrer l'id : ");
+        System.out.print("entrer l'id : ");
         int id = clavier.nextInt();
+        int x=0;
         for (int i=0;i<banque.nbrcl;i++)
         {
             if(banque.getClient()[i].getIdClient()==id)
             {
                 client=banque.getClient()[i];
                 System.out.println(client);
+                x=1;
             }
 
+
+        }
+        if(x==0)
+        {
+            System.out.println("client n'existe pas");
         }
 
     }
@@ -177,7 +210,7 @@ public class Service {
     /**----------------------------------------------modification----------------------------------------------**/
 
     public static boolean modifierCompte(Scanner clavier){
-        System.out.print("entrer l'id");
+        System.out.print("entrer l'id: ");
         int id=clavier.nextInt();
         for(int i=0;i<banque.nbrcp;i++)
         {
@@ -192,25 +225,28 @@ public class Service {
     }
 
     public static boolean modifierClient(Scanner clavier){
-        System.out.print("entrer l'id : ");
+        System.out.print("entrer l'id: ");
         int id=clavier.nextInt();
         for(int i=0;i<banque.nbrcl;i++)
         {
             if(banque.getClient()[i].getIdClient()==id)
             {
-                System.out.println("vous voulez supp quoi ?");
+
                 int c =-1;
                 do{
-                    System.out.println("1.nom");
-                    System.out.println("2.prenom");
-                    System.out.println("3.email");
-                    System.out.println("0.exit");
-                    System.out.println("enter votre choix : ");
+                    System.out.println("--------------------");
+                    System.out.println("       1. nom");
+                    System.out.println("       2. prenom");
+                    System.out.println("       3. email");
+                    System.out.println("-------------------");
+                    System.out.println("       0. exit");
+                    System.out.println("-------------------");
+                    System.out.print("enter votre choix : ");
                     c=clavier.nextInt();
                     switch (c)
                     {
                         case 1:{
-                            System.out.println("enter le nom : ");
+                            System.out.print("enter le nom : ");
                             String nom = clavier.next();
                             banque.getClient()[i].setNom(nom);
 
@@ -218,13 +254,13 @@ public class Service {
                         }
                         case 2:
                         {
-                            System.out.println("enter le prenom : ");
+                            System.out.print("enter le prenom : ");
                             String prenom = clavier.next();
                             banque.getClient()[i].setPrenom(prenom);
                             break;
                         }
                         case 3:{
-                            System.out.println("enter l'email : ");
+                            System.out.print("enter l'email : ");
                             String email = clavier.next();
                             banque.getClient()[i].setEmail(email);
 
@@ -287,18 +323,26 @@ public class Service {
         Scanner clavier=new Scanner(System.in);
 
         do {
-            System.out.println("1.ajouter un compte : ");
-            System.out.println("2.ajouter un client : ");
-            System.out.println("3.chercher un compte ");
-            System.out.println("4.chercher un client ");
-            System.out.println("5.consulter detail compte ");
-            System.out.println("6.consulter detail client ");
-            System.out.println("7.modifier compte ");
-            System.out.println("8.modifier client ");
-            System.out.println("9.supprimer compte ");
-            System.out.println("10.supprimer client ");
-            System.out.println("0.exit");
-            System.out.println("enter votre choix : ");
+            System.out.println("--------------------------------------------------------- ");
+            System.out.println("                 1. ajouter un compte  ");
+            System.out.println("                 2. ajouter un client  ");
+            System.out.println("                 3. chercher un compte ");
+            System.out.println("                 4. chercher un client ");
+            System.out.println("                 5. consulter detail compte ");
+            System.out.println("                 6. consulter detail client ");
+            System.out.println("                 7. modifier compte ");
+            System.out.println("                 8. modifier client ");
+            System.out.println("                 9. supprimer compte ");
+            System.out.println("                 10. supprimer client ");
+            System.out.println("--------------------------------------------------------- ");
+            System.out.println("                 11. verser ");
+            System.out.println("                 12. retirer  ");
+            System.out.println("                 12. virement  ");
+            System.out.println("--------------------------------------------------------- ");
+
+            System.out.println("                 0. exit");
+            System.out.println("--------------------------------------------------------- ");
+            System.out.print("-> enter votre choix : ");
             choice=clavier.nextInt();
             switch (choice){
                 case 1:
@@ -312,21 +356,44 @@ public class Service {
                     break;
 
                 case 3:
-                    System.out.println(chercherlCompte(clavier).toString());
+                    Compte comp=chercherlCompte(clavier);
+                    if(comp==null)
+                    {
+                        System.out.println("compte n'existe pas");
+
+                    }
+                    else
+                    {
+                        System.out.println("compte existe");
+
+                    }
 
                     break;
 
                 case 4:
-                    System.out.println(chercherlClient(clavier).toString());
+                    Client cli=chercherlClient(clavier);
+                    if(cli==null)
+                    {
+                        System.out.println("client n'existe pas");
+
+                    }
+                    else
+                    {
+                        System.out.println("client existe");
+
+                    }
 
                     break;
                 case 5:
-                    consulterDétailCompte(clavier);
+
+                        consulterDétailCompte(clavier);
+
 
 
                     break;
                 case 6:
-                    consulterDétailClient(clavier);
+
+                        consulterDétailClient(clavier);
 
                     break;
                 case 7:
@@ -345,6 +412,22 @@ public class Service {
                     break;
                 case 10:
                     supprimerClient(clavier);
+
+                    break;
+                case 11:
+                    System.out.print("enter le montant : ");
+                    double montant = clavier.nextDouble();
+                    Compte c=chercherlCompte(clavier);
+                    verser(montant,c);
+
+
+                    break;
+                case 12:
+                    System.out.print("enter le montant : ");
+                    double montant_ret = clavier.nextDouble();
+                    Compte c_ret=chercherlCompte(clavier);
+                    retirer(montant_ret,c_ret);
+
 
                     break;
             }

@@ -12,7 +12,7 @@ public class Compte {
     private String[] journalisation=new String[10];
     private Client client ;
     private LocalDateTime date;
-    public static int count;
+    public static int count=1;
     public int i;
 
     //Constructeurs
@@ -115,7 +115,7 @@ public class Compte {
 
     @Override
     public String toString() {
-        return "id="+idCompte +"solde="+solde+"date de creation : "+date;
+        return "id: "+idCompte +" solde: "+solde+" date de creation: "+date;
 
     }
 
