@@ -15,11 +15,10 @@ public class Client {
     public Client(){}
     public Client(String nom,String prenom, String email)
     {
-        this.idClient = count++;
+        this.idClient=count++;
         this.nom=nom;
         this.prenom=prenom;
         this.email=email;
-        this.idClient = count++;
 
     }
 
@@ -80,7 +79,7 @@ public class Client {
         if(other instanceof Client)
             return  false;
         Client o= (Client) other;
-        if (this.getIdClient()==o.getIdClient() && this.nom==o.getNom() && this.prenom==o.getPrenom() && this.email==o.getEmail() )
+        if (this.getIdClient()==o.getIdClient())
             return true;
         else return false;
     }
