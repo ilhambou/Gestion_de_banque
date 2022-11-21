@@ -102,9 +102,10 @@ public class Service {
 
     /**-------------------------------------------------lier---------------------------------------------------**/
 
-    public boolean lierCompteAuClient (int idClient, int idCompte)
-    {
+    public static boolean lierCompteAuClient(int idClient, int idCompte) {
         int x = 0;
+        int y=0;
+
         for(int i=0;i<banque.nbrcp;i++)
         {
             if(banque.getCompte()[i].getIdCompte()==idCompte)
@@ -112,13 +113,26 @@ public class Service {
                 x=i;
             }
         }
-        for(int i=0;i<banque.nbrcl;i++)
+        for(int j=0;j<banque.nbrcl;j++)
         {
-            if(banque.getClient()[i].getIdClient()==idClient)
+            if(banque.getClient()[j].getIdClient()==idClient)
             {
-                x=i;
+                y=j;
             }
         }
+        if(banque.getCompte()[x].getClient()==null)
+        {
+
+            banque.getCompte()[x].setClient(banque.getClient()[y]);
+        }
+        else
+        {
+            System.out.println("impossible");
+        }
+
+
+
+
         return true;
     }
 
@@ -348,21 +362,22 @@ public class Service {
 /**---------------------------------------------------- afficher tt --------------------------------------------**/
 
 
-    public static void afficherCompte()
-    {
+    public static void afficherCompte() {
         for(int i=0;i<banque.nbrcp;i++)
         {
             System.out.println(banque.getCompte()[i].toString());
         }
     }
 
-    public static void afficherClient()
-    {
+    public static void afficherClient() {
         for(int i=0;i<banque.nbrcl;i++)
         {
             System.out.println(banque.getClient()[i].toString());
         }
     }
+
+
+    /**-----------------------------------------------------Main------------------------------------------------**/
 
     public static void main(String[] args){
         int choice=-1;
@@ -385,12 +400,10 @@ public class Service {
             System.out.println("                 12. retirer  ");
             System.out.println("                 13. virement  ");
             System.out.println("--------------------------------------------------------- ");
-
             System.out.println("                 14. consulter tt les comptes  ");
             System.out.println("                 15. consulter tt les clients  ");
-
+            System.out.println("                 15. lier le compte au client  ");
             System.out.println("--------------------------------------------------------- ");
-
             System.out.println("                 0. exit");
             System.out.println("--------------------------------------------------------- ");
             System.out.print("-> enter votre choix : ");
@@ -501,6 +514,14 @@ public class Service {
                 case 15:
                 {
                     afficherClient();
+                }
+                case 16:
+                {
+                    System.out.print("entrer l'id du compte: ");
+                    int idCompte=clavier.nextInt();
+                    System.out.print("entrer l'id du client: ");
+                    int idClient=clavier.nextInt();
+                    lierCompteAuClient(idClient,idCompte);
                 }
             }
         }while (choice!=0);

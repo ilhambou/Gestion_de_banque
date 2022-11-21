@@ -114,7 +114,14 @@ public class Compte {
 
     @Override
     public String toString() {
-        return "id: "+idCompte +" solde: "+solde+" date de creation: "+date;
+        if(client==null)
+        {
+            return "id: "+idCompte +" solde: "+solde+" date de creation: "+date+" --AUCUN CLIENT-- ";
+        }
+        else {
+            return "id: "+idCompte +" solde: "+solde+" date de creation: "+date+" client: "+client;
+
+        }
 
     }
 
