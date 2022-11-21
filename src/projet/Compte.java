@@ -128,7 +128,7 @@ public class Compte {
     //equals
 
 
-    @Override
+   /** @Override
     public boolean equals(Object other) {
         if(other instanceof Compte)
             return  false;
@@ -137,6 +137,16 @@ public class Compte {
             return true;
         else return false;
     }
+**/
+/**
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Compte)
+            return this.getIdCompte().equals(((Compte)other).getIdCompte());
+        else
+            return false;
 
+    }
 
+    **/
 }

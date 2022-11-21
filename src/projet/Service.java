@@ -1,6 +1,6 @@
 package projet;
 
-import java.awt.*;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -402,7 +402,7 @@ public class Service {
             System.out.println("--------------------------------------------------------- ");
             System.out.println("                 14. consulter tt les comptes  ");
             System.out.println("                 15. consulter tt les clients  ");
-            System.out.println("                 15. lier le compte au client  ");
+            System.out.println("                 16. lier le compte au client  ");
             System.out.println("--------------------------------------------------------- ");
             System.out.println("                 0. exit");
             System.out.println("--------------------------------------------------------- ");
@@ -514,6 +514,7 @@ public class Service {
                 case 15:
                 {
                     afficherClient();
+                    break;
                 }
                 case 16:
                 {
@@ -522,6 +523,7 @@ public class Service {
                     System.out.print("entrer l'id du client: ");
                     int idClient=clavier.nextInt();
                     lierCompteAuClient(idClient,idCompte);
+                    break;
                 }
             }
         }while (choice!=0);

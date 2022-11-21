@@ -84,7 +84,7 @@ public class Client {
     }
 
     //Equal
-
+/**
     @Override
     public boolean equals(Object other) {
         if(other instanceof Client)
@@ -93,7 +93,17 @@ public class Client {
         if (this.getIdClient()==o.getIdClient())
             return true;
         else return false;
-    }
+    }**/
+
+    /**
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Client)
+            return this.getIdClient().equals(((Client)other).getIdClient());
+        else
+            return false;
+
+    }**/
 
     public static boolean isValid(String email)
     {
